@@ -4,37 +4,34 @@
     <title>Iframe Test</title>
     <style>
         iframe {
-            pointer-events: none; /* Prevent clicks and hovers */
-        }
-
-        /* Optional: Overlay to prevent clicks */
-        iframe {
-            position: relative;
-        }
-
-        .iframe-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: transparent; /* Adjust opacity as needed */
-            pointer-events: none;
+            pointer-events: all; /* Allow pointer events within the iframe */
         }
     </style>
 </head>
 <body>
-
-
-hello
-    
     <iframe id="my-iframe" src="https://embed.su/embed/movie/634649" width="800" height="450" frameborder="0" allow="autoplay; fullscreen"></iframe>
 
     <script>
         const iframe = document.getElementById('my-iframe');
 
         iframe.addEventListener('click', (event) => {
-            event.preventDefault();
+            event.preventDefault(); // Prevent default behavior (e.g., redirection)
+        });
+
+        iframe.addEventListener('load', () => {
+            const iframeDocument = iframe.contentDocument;
+
+            // Handle specific clicks or events within the iframe
+            iframeDocument.addEventListener('click', (event) => {
+                const targetElement = event.target;
+
+                // Example: Prevent links from opening in new tabs
+                if (targetElement.tagName === 'A') {
+                    event.preventDefault();
+                    // You can handle the click here, e.g., log information, trigger actions
+                    console.log('Link clicked:', targetElement.href);
+                }
+            });
         });
     </script>
 </body>
