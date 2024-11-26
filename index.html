@@ -6,7 +6,7 @@
     <title>Embed Iframe Example</title>
     <style>
         .vp {
-            position: relative; /* Container for the iframe */
+            position: relative; /* Container for iframe */
             width: 800px;
             height: 450px;
         }
@@ -14,12 +14,11 @@
         .vp iframe {
             width: 100%;
             height: 100%;
-            pointer-events: none; /* Disable all pointer events on iframe by default */
+            pointer-events: none; /* Disable pointer events by default */
         }
 
-        /* Optional: Styling for the play button overlay if needed */
         .vp:hover iframe {
-            pointer-events: auto; /* Enable pointer events when hovering on iframe to interact with controls */
+            pointer-events: auto; /* Enable pointer events when hovering over iframe */
         }
     </style>
 </head>
@@ -34,6 +33,25 @@
         allow="autoplay; fullscreen">
     </iframe>
 </div>
+
+<script>
+    // Adding an event listener to block redirections by preventing clicks
+    document.querySelector('iframe').addEventListener('load', function() {
+        const iframeDoc = document.querySelector('iframe').contentWindow.document;
+        
+        iframeDoc.body.addEventListener('click', function(event) {
+            // Prevent clicks that lead to redirection
+            const clickedElement = event.target;
+
+            // You can modify the following logic to selectively allow certain actions
+            if (clickedElement.tagName === 'A' || clickedElement.closest('a')) {
+                event.preventDefault();  // Prevent redirection
+                event.stopPropagation(); // Stop the click event from bubbling
+                alert('Redirection prevented!');
+            }
+        });
+    });
+</script>
 
 </body>
 </html>
