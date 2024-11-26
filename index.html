@@ -14,24 +14,32 @@
     <script>
         const iframe = document.getElementById('my-iframe');
 
-        iframe.addEventListener('click', (event) => {
-            event.preventDefault(); // Prevent default behavior (e.g., redirection)
-        });
-
         iframe.addEventListener('load', () => {
             const iframeDocument = iframe.contentDocument;
 
-            // Handle specific clicks or events within the iframe
+            // Prevent default behavior for all clicks within the iframe
             iframeDocument.addEventListener('click', (event) => {
+                event.preventDefault();
+
                 const targetElement = event.target;
 
-                // Example: Prevent links from opening in new tabs
+                // Handle specific click events as needed
                 if (targetElement.tagName === 'A') {
-                    event.preventDefault();
-                    // You can handle the click here, e.g., log information, trigger actions
+                    // Log the clicked link
                     console.log('Link clicked:', targetElement.href);
+
+                    // Optionally, open the link in a new tab or window with specific settings
+                    window.open(targetElement.href, '_blank');
+                } else if (targetElement.tagName === 'BUTTON' || targetElement.tagName === 'INPUT') {
+                    // Handle button clicks or form submissions
+                    // ...
                 }
             });
+
+            // Additional security measures (optional):
+            // - Sanitize user input from the iframe
+            // - Implement a Content Security Policy (CSP) to restrict resource loading
+            // - Monitor network requests for suspicious activity
         });
     </script>
 </body>
