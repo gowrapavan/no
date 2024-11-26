@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Embed Iframe Example</title>
+    <style>
+        .vp {
+            cursor: pointer; /* Optional: Gives a hint that the div can be interacted with */
+        }
+    </style>
+</head>
+<body>
+
+<div class="vp">
+    <iframe 
+        src="https://embed.su/embed/movie/634649" 
+        width="800" 
+        height="450" 
+        frameborder="0" 
+        allow="autoplay; fullscreen">
+    </iframe>
+</div>
+
+<script>
+    // Prevent any unintended click action on the div or iframe
+    document.querySelector('.vp').addEventListener('click', function(event) {
+        event.preventDefault();  // Prevents any default action (like redirects or form submissions)
+        event.stopPropagation(); // Prevents the event from bubbling up (if other listeners are on parent elements)
+    });
+
+    // Ensure that clicks on iframe itself don't trigger redirects
+    document.querySelector('iframe').addEventListener('click', function(event) {
+        event.preventDefault();  // Stops clicks inside the iframe from causing any redirection
+        event.stopPropagation(); // Prevents further event bubbling
+    });
+</script>
+
+</body>
+</html>
