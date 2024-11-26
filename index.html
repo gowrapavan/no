@@ -6,7 +6,22 @@
     <title>Embed Iframe Example</title>
     <style>
         .vp {
-            cursor: pointer; /* Optional: Gives a hint that the div can be interacted with */
+            position: relative; /* To allow overlay to be placed over iframe */
+            width: 800px;
+            height: 450px;
+        }
+        .vp iframe {
+            width: 100%;
+            height: 100%;
+        }
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0); /* Transparent overlay */
+            z-index: 10; /* Places the overlay above the iframe */
         }
     </style>
 </head>
@@ -20,21 +35,8 @@
         frameborder="0" 
         allow="autoplay; fullscreen">
     </iframe>
+    <div class="overlay"></div> <!-- Transparent overlay to block clicks -->
 </div>
-
-<script>
-    // Prevent any unintended click action on the div or iframe
-    document.querySelector('.vp').addEventListener('click', function(event) {
-        event.preventDefault();  // Prevents any default action (like redirects or form submissions)
-        event.stopPropagation(); // Prevents the event from bubbling up (if other listeners are on parent elements)
-    });
-
-    // Ensure that clicks on iframe itself don't trigger redirects
-    document.querySelector('iframe').addEventListener('click', function(event) {
-        event.preventDefault();  // Stops clicks inside the iframe from causing any redirection
-        event.stopPropagation(); // Prevents further event bubbling
-    });
-</script>
 
 </body>
 </html>
